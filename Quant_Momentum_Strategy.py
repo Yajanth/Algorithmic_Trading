@@ -16,15 +16,15 @@ ind=len(stocks['Ticker'])
 def extract_data(lst):
     global my_columns
     global stocks_dataframe  
-    stocks_dataframe=pd.DataFrame(columns=my_columns)
     my_columns = ['Ticker', 'Price',
               'One_year Price Return', 'Number of shares to Buy']
+    stocks_dataframe=pd.DataFrame(columns=my_columns)
     for stock in lst:
         try:
             ticker = yf.Ticker(stock)
             data = ticker.info
             if data is not None:
-                stocks_dataframe = stocks_dataframe.append(
+                stocks_dataframe = pd.concat([stocks_dataframe,
                     pd.Series(
                         [
                             stock,
@@ -32,12 +32,15 @@ def extract_data(lst):
                             data.get('returnOnEquity', 'N/A'),
                             'N/A'
                         ], index= my_columns
-                    ), ignore_index=True
+                    ).to_frame().T], ignore_index=True
                 )
             else:
                 print(stock, ': Data not found')
         except Exception as e:
             print(stock, ':', str(e))
+
+extract_data(stocks['Ticker'][range(0,5)])
+
 
 
 def main():
