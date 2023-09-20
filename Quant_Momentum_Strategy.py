@@ -16,15 +16,15 @@ ind=len(stocks['Ticker'])
 def extract_data(lst):
     global my_columns
     global stocks_dataframe  
+    stocks_dataframe=pd.DataFrame(columns=my_columns)
     my_columns = ['Ticker', 'Price',
               'One_year Price Return', 'Number of shares to Buy']
-    stocks_dataframe=pd.DataFrame(columns=my_columns)
     for stock in lst:
         try:
             ticker = yf.Ticker(stock)
             data = ticker.info
             if data is not None:
-                stocks_dataframe = pd.concat([stocks_dataframe,
+                stocks_dataframe = stocks_dataframe.append(
                     pd.Series(
                         [
                             stock,
@@ -32,57 +32,52 @@ def extract_data(lst):
                             data.get('returnOnEquity', 'N/A'),
                             'N/A'
                         ], index= my_columns
-                    ).to_frame().T], ignore_index=True
+                    )to_frame().T,ignore_index=True
                 )
             else:
                 print(stock, ': Data not found')
         except Exception as e:
             print(stock, ':', str(e))
-
-extract_data(stocks['Ticker'][range(0,5)])
-
-
-
+lst1=stocks['Ticker'][range(0,100)]
+lst2=stocks['Ticker'][range(100,200)]
+lst3=stocks['Ticker'][range(200,300)]
+lst4=stocks['Ticker'][range(300,400)]
+lst5=stocks['Ticker'][range(400,505)]
+# executing Multi-threading 
 def main():
     # Get the list of stocks (modify this as needed)
-    # lst = ['AAPL', 'GOOGL']
+
     lst=stocks['Ticker']
-
-
     # Initialize the global stocks_dataframe
     global stocks_dataframe
+    my_columns = ['Ticker', 'Price',
+              'One_year Price Return', 'Number of shares to Buy']
     stocks_dataframe = pd.DataFrame(columns=my_columns)
 
     # Create a ThreadPoolExecutor
-    with ThreadPoolExecutor() as executor:
+    with ThreadPoolExecutor(max_workers=5) as executor:
         # Submit tasks for each stock
-        futures = [executor.submit(extract_data, stock) for stock in lst]
-
+        futures1 = executor.submit(extract_data, lst1) 
+        print(futures1)
+        futures2 = [executor.submit(extract_data, lst2) ]
+        futures3 = [executor.submit(extract_data, lst3) ]
+        futures4 = [executor.submit(extract_data, lst4) ]
+        # futures5= [executor.submit(extract_data, stock) for stock in lst5]
+        futures = [executor.submit(extract_data, lst5) ]
+        
         # Wait for all tasks to complete
-        # concurrent.futures.wait(futures)
+        # concurrent.futures.wait(futures1)
 
         # Get the results from completed tasks and append them to the DataFrame
-        for future in futures:
-            result = future.result()
-            if result is not None:
-                stocks_dataframe = pd.append(result, ignore_index=True)
+        
 
 if __name__ == "__main__":
     main()
 
-
-def pooling():
-    with ThreadPoolExecutor as executor:
-     lst=stocks['Ticker']
-     
-pooling()    
-
-
-
 # Importing and cleaning the data
 stocks_dataframe=pd.DataFrame(columns=my_columns)
 stocks_dataframe=pd.read_csv('Strategy_data.csv')
-stocks_dataframe.drop(columns='Unnamed: 0',inplace=True)
+stocks_dataframe=stocks_dataframe.drop(columns='Unnamed: 0',inplace=True)
 
 stocks_dataframe.sort_values('One_year Price Return',ascending=False,inplace=True)
 # stocks_dataframe.reset_index(inplace=True)
