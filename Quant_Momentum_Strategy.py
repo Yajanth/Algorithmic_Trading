@@ -46,7 +46,6 @@ lst5=stocks['Ticker'][range(400,505)]
 # executing Multi-threading 
 def main():
     # Get the list of stocks (modify this as needed)
-
     lst=stocks['Ticker']
     # Initialize the global stocks_dataframe
     global stocks_dataframe

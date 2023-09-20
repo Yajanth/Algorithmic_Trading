@@ -1,32 +1,45 @@
-# Quantitative Momentum Algo Trading System
+# Algorithmic Trading Data Preparation
 
-This repository contains a Python-based quantitative momentum trading system designed to analyze and optimize stock portfolios using a momentum strategy. The system leverages data analysis, automation, and algorithmic trading techniques.
+## Overview
 
-## Features
+This Python script is designed to assist in the data preparation phase of algorithmic trading. It utilizes multi-threading and the Yahoo Finance API to gather financial information for a list of S&P 500 stocks. The code then performs some analysis on the collected data, filters the top 50 stocks based on one-year price return, and calculates the number of shares to buy for a given portfolio size. Below are the key components and instructions for using this script.
 
-- **Quantitative Momentum Strategy**: Utilizes a momentum-based approach to select top-performing stocks.
-- **Data Analysis**: Processes S&P 500 stock data to calculate one-year price returns.
-- **Dynamic Portfolio Allocation**: Efficiently allocates capital to the 50 highest-returning stocks.
-- **Tech Stack**: Demonstrates proficiency in Python, Pandas, NumPy, and financial libraries.
+## Prerequisites
 
-## Getting Started
+Before running the script, ensure you have the following prerequisites:
 
-1. Clone the repository:
-
-   git clone https://github.com/Yajanth/Algorithmic_Trading.git
-Install the required dependencies:
-
-Copy code 
-pip install -r requirements.txt
-Run the main script:
+1. Python 3.10 installed on your system.
+2. Required libraries, which can be installed using pip:
+   - numpy
+   - pandas
+   - yfinance
+   - threading
+   - concurrent.futures
+   - warnings
 
 ## Usage
-Customize the project by modifying the parameters and criteria for stock selection.
-Adjust the portfolio size for your desired investment level.
-Analyze and optimize the trading system's performance based on your investment goals.
 
-## Acknowledgments
-yfinance for providing financial data.
-Pandas and NumPy for data manipulation.
-SciPy for statistical calculations.
-Contributing
+1. Clone or download this repository to your local machine.
+
+2. Open a terminal or command prompt and navigate to the project directory.
+
+3. Ensure you have a CSV file named "sp_500_stocks.csv" in the project directory. This file should contain a list of S&P 500 stock tickers.
+
+4. Execute the script by running the following command:
+
+5. Follow the on-screen prompts to input the size of your portfolio.
+
+6. The script will then gather data for the selected stocks, filter the top 50 based on one-year price return, and calculate the number of shares to buy for your portfolio.
+
+7. Review the results displayed on the screen, which will include the list of top 50 stocks and the number of shares to buy for your portfolio.
+
+## Notes
+
+- The script uses multi-threading to speed up data extraction from Yahoo Finance. The number of threads used is adjustable in the `max_workers` parameter within the `ThreadPoolExecutor` block.
+
+- Make sure you have a stable internet connection, as the script relies on fetching data from the Yahoo Finance API.
+
+- The script may display warnings if it encounters issues with fetching data for certain stocks. These warnings can be safely ignored, but it's advisable to review them to ensure data completeness.
+
+- The filtered list of top 50 stocks and the number of shares to buy are displayed on the screen, but you can also access this data in the `stocks_dataframe` variable within the script.
+
