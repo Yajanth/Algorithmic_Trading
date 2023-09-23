@@ -57,12 +57,12 @@ def main():
     with ThreadPoolExecutor(max_workers=5) as executor:
         # Submit tasks for each stock
         futures1 = executor.submit(extract_data, lst1) 
-        print(futures1)
+    
         futures2 = [executor.submit(extract_data, lst2) ]
         futures3 = [executor.submit(extract_data, lst3) ]
         futures4 = [executor.submit(extract_data, lst4) ]
         # futures5= [executor.submit(extract_data, stock) for stock in lst5]
-        futures = [executor.submit(extract_data, lst5) ]
+        futures5= [executor.submit(extract_data, lst5) ]
         
         # Wait for all tasks to complete
         # concurrent.futures.wait(futures1)
@@ -96,4 +96,13 @@ def portfolio_input():
 
 portfolio_input()
 position_size=float(portfolio_size)/len(stocks_dataframe['Ticker'])
-position_size
+print('Position_size:',position_size)
+
+# calculating Number of shares to buy
+
+for i in range(0,len(stocks_dataframe.index)):
+    stocks_dataframe.loc(i,'Number of shares to Buy')=math.floor(position_size/stocks_dataframe.loc([i,'Price']))
+
+
+
+
