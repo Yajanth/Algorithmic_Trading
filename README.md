@@ -45,7 +45,7 @@ pip install numpy pandas scipy yfinance
 4. Run the script by executing the `momentum_strategy.py` file.
 
 ```bash
-python momentum_strategy.py
+python Quant_Momentum_Strategy.py
 ```
 
 5. Follow the on-screen instructions to enter the size of your investment portfolio.
