@@ -1,45 +1,72 @@
-# Algorithmic Trading Data Preparation
+Here's a README for your code:
 
-## Overview
+# Momentum-Based Stock Selection Strategy
 
-This Python script is designed to assist in the data preparation phase of algorithmic trading. It utilizes multi-threading and the Yahoo Finance API to gather financial information for a list of S&P 500 stocks. The code then performs some analysis on the collected data, filters the top 50 stocks based on one-year price return, and calculates the number of shares to buy for a given portfolio size. Below are the key components and instructions for using this script.
+This Python script is designed to implement a momentum-based stock selection strategy using historical stock price data obtained from Yahoo Finance. The strategy selects stocks with high momentum by considering their price returns over different time periods.
 
-## Prerequisites
+## Table of Contents
+- [Introduction](#introduction)
+- [Dependencies](#dependencies)
+- [Usage](#usage)
+- [Strategy Overview](#strategy-overview)
+- [Code Structure](#code-structure)
 
-Before running the script, ensure you have the following prerequisites:
+## Introduction
 
-1. Python 3.10 installed on your system.
-2. Required libraries, which can be installed using pip:
-   - numpy
-   - pandas
-   - yfinance
-   - threading
-   - concurrent.futures
-   - warnings
+The script uses the `yfinance` library to fetch historical stock price data for a list of S&P 500 stocks. It calculates various price returns, including 1-year price returns, and assigns a percentile score to each stock based on its returns. The stocks are then ranked by their percentile scores to identify high-quality momentum stocks.
+
+## Dependencies
+
+The script relies on the following Python libraries:
+
+- `numpy`
+- `pandas`
+- `scipy.stats`
+- `math`
+- `yfinance`
+- `threading`
+- `concurrent.futures`
+- `datetime`
+
+You can install these libraries using `pip` if you haven't already:
+
+```bash
+pip install numpy pandas scipy yfinance
+```
 
 ## Usage
 
-1. Clone or download this repository to your local machine.
+1. Clone or download the repository to your local machine.
 
-2. Open a terminal or command prompt and navigate to the project directory.
+2. Make sure you have the required dependencies installed (see the Dependencies section).
 
-3. Ensure you have a CSV file named "sp_500_stocks.csv" in the project directory. This file should contain a list of S&P 500 stock tickers.
+3. Prepare a CSV file containing the list of S&P 500 stock tickers (e.g., "sp_500_stocks.csv").
 
-4. Execute the script by running the following command:
+4. Run the script by executing the `momentum_strategy.py` file.
 
-5. Follow the on-screen prompts to input the size of your portfolio.
+```bash
+python momentum_strategy.py
+```
 
-6. The script will then gather data for the selected stocks, filter the top 50 based on one-year price return, and calculate the number of shares to buy for your portfolio.
+5. Follow the on-screen instructions to enter the size of your investment portfolio.
 
-7. Review the results displayed on the screen, which will include the list of top 50 stocks and the number of shares to buy for your portfolio.
+6. The script will generate a CSV file named "Final_Strategy.csv" containing the selected stocks and the number of shares to buy for each stock based on your portfolio size.
 
-## Notes
+## Strategy Overview
 
-- The script uses multi-threading to speed up data extraction from Yahoo Finance. The number of threads used is adjustable in the `max_workers` parameter within the `ThreadPoolExecutor` block.
+The strategy ranks stocks based on their percentile scores for different time periods, including 1-year price returns. High percentile scores indicate strong momentum. The selected stocks are then allocated to your portfolio based on your specified portfolio size.
 
-- Make sure you have a stable internet connection, as the script relies on fetching data from the Yahoo Finance API.
+## Code Structure
 
-- The script may display warnings if it encounters issues with fetching data for certain stocks. These warnings can be safely ignored, but it's advisable to review them to ensure data completeness.
+- **Data Extraction**: The script uses `yfinance` to extract historical stock price data for the S&P 500 stocks in parallel using multi-threading.
 
-- The filtered list of top 50 stocks and the number of shares to buy are displayed on the screen, but you can also access this data in the `stocks_dataframe` variable within the script.
+- **Returns Calculation**: It calculates various price returns (e.g., 1-year returns) for each stock.
+
+- **Percentile Ranking**: Stocks are ranked by their percentile scores for different time periods, and the `scipy.stats` library is used for percentile calculations.
+
+- **Portfolio Allocation**: The script determines the number of shares to buy for each selected stock based on your portfolio size.
+
+- **Output**: The final list of selected stocks and their allocation details are saved in a CSV file for your reference.
+
+This script provides a simple yet effective way to identify high-quality momentum stocks based on historical price returns.
 
