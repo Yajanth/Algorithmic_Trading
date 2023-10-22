@@ -13,7 +13,7 @@ This Python script is designed to implement a momentum-based stock selection str
 
 ## Introduction
 
-The script uses the `yfinance` library to fetch historical stock price data for a list of S&P 500 stocks. It calculates various price returns, including 1-year price returns, and assigns a percentile score to each stock based on its returns. The stocks are then ranked by their percentile scores to identify high-quality momentum stocks.
+The script uses the `yfinance` library to fetch historical stock price data for a list of S&P 500 stocks. It calculates various price returns, including 1-year,6-months price returns, and assigns a percentile score to each stock based on its returns. The stocks are then ranked by their percentile scores to identify high-quality momentum stocks.
 
 ## Dependencies
 
