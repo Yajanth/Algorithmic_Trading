@@ -168,8 +168,6 @@ except:
     portfolio_size=float(input('Enter the value of the portfolio'))
 
 val=portfolio_size
-val
-
 
 # Position such as the amount of money invested in stock
 position_size=val/len(stocks_dataframe.index)
